@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+TVAULT_VERSION=$1
+TVAULT_IPADDRESS=$2
+
+juju-log "GOT the value from config $TVAULT_VERSION"
+juju-log "GOT the value from config $TVAULT_IPADDRESS"
+
+pip install --no-deps http://$TVAULT_IPADDRESS:8081/packages/python-workloadmgrclient-$TVAULT_VERSION &> /dev/null
+        if [ $? -eq 0 ]; then
+                juju-log "Installing python-workloadmgrclient-$TVAULT_VERSION"
+        else
+                juju-log "Error : pip install http://$TVAULT_IPADDRESS:8081/packages/python-workloadmgrclient-$TVAULT_VERSION"
+                exit 1
+        fi
+        pip install --no-deps http://$TVAULT_IPADDRESS:8081/packages/tvault-horizon-plugin-$TVAULT_VERSION &> /dev/null
+        if [ $? -eq 0 ]; then
+                juju-log "Installing tvault-horizon-plugin-$TVAULT_VERSION"
+        else
+                juju-log "Error : pip install  http://$TVAULT_IPADDRESS:8081/packages/tvault-horizon-plugin-$TVAULT_VERSION"
+                exit 1
+        fi
+juju-log "Workloadmanager client and tvault-horizon-plugin are installed....configure is next step"
