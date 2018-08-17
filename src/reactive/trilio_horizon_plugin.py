@@ -58,8 +58,8 @@ def install_trilio_horizon_plugin():
     validate_op = validate_ip(tv_ip)
 
     if validate_op:
-        # Return code is 0, so the IP address is invalid. Set status as blocked
-        # and return
+        # IP address is invalid
+        # Set status as blocked and return
         status_set(
             'blocked',
             'Invalid IP address, please provide correct IP address')
